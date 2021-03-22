@@ -1,0 +1,59 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(hash)
+```
+
+
+Read data
+```{r}
+data <- readRDS("./GSE149221_SpInteg.rds")
+```
+
+Get sample names
+```{r}
+samples <- c()
+sample_list <- strsplit(Cells(data), "_")
+for (i in 1:60399)
+  samples <- append(samples, sample_list[[i]][1])
+samples <- unique(samples)
+samples
+```
+Get cells by sample 
+```{r}
+cells.Sp1 <- Cells(data)[grepl("Sp1_", Cells(data))]
+cells.Sp2 <- Cells(data)[grepl("Sp2_", Cells(data))]
+cells.Sp3 <- Cells(data)[grepl("Sp3_", Cells(data))]
+cells.EB <- Cells(data)[grepl("EB_", Cells(data))]
+cells.HB <- Cells(data)[grepl("HB_", Cells(data))]
+cells.MB <- Cells(data)[grepl("MB_", Cells(data))]
+cells.EG <- Cells(data)[grepl("EG_", Cells(data))]
+cells.LG <- Cells(data)[grepl("LG_", Cells(data))]
+```
+
+```{r}
+DimPlot(data, reduction = "tsne", cells=cells.Sp1, label=TRUE)
+```
+
+```{r}
+VlnPlot(data, features = c("SoxB2"))
+```
+
+```{r}
+DimPlot(data, reduction = "tsne", label=TRUE)
+plot1 <- FeaturePlot(data, features = c("foxq2"), label=TRUE)
+plot2 <- FeaturePlot(data, features = c("NK2.1"), label=TRUE)
+plot3 <- FeaturePlot(data, features = c("AnkAT-1"), label=TRUE)
+plot4 <- FeaturePlot(data, features = c("SoxB2"), label=TRUE)
+plot5 <- FeaturePlot(data, features = c("Alx1"), label=TRUE)
+plot5
+grep("fox", rownames(data), value=TRUE)
+```
+```{r}
+
+```
+
+
